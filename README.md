@@ -1,7 +1,7 @@
-### price optimization
+### Unlocking Pricing Mastery: The Blueprint
 
 
-<img src="revenue_max.webp" alt="price-revenue" width="400">
+<img src="pricing_strategy.webp" alt="price-strategy" width="400">
 
 ```python
 
