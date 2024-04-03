@@ -4,6 +4,21 @@
 <img src="pricing_strategy.webp" alt="price-strategy" width="400">
 
 
+- [Why is important?](#Why-is-important?)
+- [Net Revenue Management](#Net-Revenue-Management)
+- [Introduction](#introduction)
+   + [Data exploring](data_explorer.ipynb)
+- [ML models](#ml-models)
+   + [building the model](loyalty_drivers.ipynb)
+- [Most important features](#most-important-features)
+   + [building SHAP values](loyalty_drivers.ipynb)
+- [Budget optimization](#budget-optimization)
+   + [building the optimization model](optimizing_loyalty.ipynb)
+- [What if scenario](#what-if-scenario)
+   + [DiCE model](optimizing_loyalty.ipynb)
+- [Findings](#findings)
+
+
 ## Why is important?
 
 
