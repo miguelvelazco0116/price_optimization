@@ -51,6 +51,9 @@ The points mentioned above highlight why implementing a **net revenue management
 
 Therefore, the most critical aspect is harnessing the power of data. Ultimately, **NRM** empowers organizations to effectively leverage available data for sustainable growth. In this article, we'll delve into the essential steps and considerations for begin to develop a successful NRM agenda that drives revenue growth through data utilization.
 
+
+<img src="roadmap.png" alt="roadmap" width="850">
+
 ```python
 
 ```
