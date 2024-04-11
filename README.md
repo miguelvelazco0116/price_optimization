@@ -1,4 +1,4 @@
-### Unlocking Pricing Mastery: The Blueprint
+# *Unlocking Pricing Mastery: The Blueprint*
 
 
 <center><img src="pricing_strategy.webp" alt="price-strategy" width="400"></center>
@@ -7,6 +7,7 @@
 - [Why is important?](#Why-is-important?)
 - [Net Revenue Management](#Net-Revenue-Management)
 - [The roadmap](#the-roadmap)
+- [Analysis](#analysis)
 - [ML models](#ml-models)
    + [building the model](loyalty_drivers.ipynb)
 
@@ -68,6 +69,12 @@ Therefore, the most critical aspect is harnessing the power of data. Ultimately,
 
 
 <img src="roadmap.png" alt="roadmap" width="850">
+
+
+## Case study
+
+
+<center><img src="gas_station.webp" alt="gas-price" width="400"></center>
 
 ```python
 
