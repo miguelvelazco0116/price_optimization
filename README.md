@@ -7,7 +7,7 @@
 - [Why is important?](#Why-is-important?)
 - [Net Revenue Management](#Net-Revenue-Management)
 - [The roadmap](#the-roadmap)
-- [Analysis](#analysis)
+- [Case study](#case-study)
 - [ML models](#ml-models)
    + [building the model](loyalty_drivers.ipynb)
 
