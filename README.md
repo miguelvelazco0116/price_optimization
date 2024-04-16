@@ -193,3 +193,17 @@ In our case, we aim to explore potential scenarios for the upcoming seven days.
 
 
 From the chart above, we observe 10,000 simulated scenarios representing sales for the next 7 days. It's notable that the majority of these scenarios predict sales volumes above 5,000 liters and near to 10,000.
+
+
+### Price elasticity
+
+
+Understanding elasticity holds immense importance in economics as it offers insights into how responsive people are to changes in prices or other variables. Elasticity can be envisioned as a gauge of the extent of reaction to change. In this context, we're specifically referring to how demand for a product or service fluctuates in response to alterations in its price.
+
+High elasticity implies that people significantly adjust their purchasing behavior in response to price fluctuations. Conversely, low elasticity suggests minimal changes in buying habits, even when prices vary. This concept is pivotal for both businesses and policymakers. For businesses, awareness of their product's elasticity aids in setting prices strategically. If demand is elastic, caution is warranted in price hikes to avoid substantial sales declines. Conversely, if demand is inelastic, pricing strategies can be more flexible.
+
+In essence, elasticity serves as a measure of consumers' sensitivity to price alterations, thereby assisting businesses and policymakers in making informed decisions.
+
+```python
+
+```
