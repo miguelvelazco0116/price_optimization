@@ -8,6 +8,7 @@
 - [Net Revenue Management](#Net-Revenue-Management)
 - [The roadmap](#the-roadmap)
 - [Case study](#case-study)
+
 - [ML models](#ml-models)
    + [building the model](loyalty_drivers.ipynb)
 
@@ -192,7 +193,3 @@ In our case, we aim to explore potential scenarios for the upcoming seven days.
 
 
 From the chart above, we observe 10,000 simulated scenarios representing sales for the next 7 days. It's notable that the majority of these scenarios predict sales volumes above 5,000 liters and near to 10,000.
-
-```python
-
-```
