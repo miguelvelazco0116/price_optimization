@@ -8,7 +8,7 @@
 - [Net Revenue Management](#Net-Revenue-Management)
 - [The roadmap](#the-roadmap)
 - [Case study](#case-study)
-   + [data exploring](data_exploring.ipynb)
+   + [data exploring](#data-exploring)
 - [ML models](#ml-models)
    + [building the model](loyalty_drivers.ipynb)
 
