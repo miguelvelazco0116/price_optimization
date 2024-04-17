@@ -204,6 +204,98 @@ High elasticity implies that people significantly adjust their purchasing behavi
 
 In essence, elasticity serves as a measure of consumers' sensitivity to price alterations, thereby assisting businesses and policymakers in making informed decisions.
 
+Analyzing the data from the charts we've seen earlier, it seems that there might be a relationship between price changes and demand fluctuations.
+
+Looking ahead, our main goal is to understand this relationship, especially considering the extraordinary circumstances such as the ongoing pandemic. By taking into account the timing of the pandemic and its effects on consumer behavior, we hope to uncover how demand elasticity has been influenced.
+
+`price vs sales`
+
+Exploring the dynamics of product elasticity amidst the backdrop of a pandemic-induced lockdown reveals intriguing insights. Observing the chart below, it becomes evident that the product exhibits characteristics of inelasticity. Despite a higher price point, sales remain robust, indicating a lesser degree of responsiveness to price changes. However, it's crucial to note that this trend is intricately tied to the unique circumstances of the lockdown imposed due to the pandemic. Let's delve deeper into the implications of this phenomenon.
+
+
+<center><img src="log_sales_vs_log_price.png" alt="price_vs_sales" width="950"></center>
+
+
+In the charts above, we can discern the connection between price and sales, as well as these variables when logged.
+
+
+`OLS model`
+
+
+The next step involves determining the sensitivity of sales to price changes, taking into account the following relation:
+
+$$
+Y = \beta_0 + \beta_1X_i
+$$
+
+where $\beta_0$ is the intercept and $\beta_1$ represents the price sensitivity, it's important to note that the relationship isn't a straightforward percentage proportion and doesn't directly represent elasticity. *Elasticity,* in essence, measures the percentage change in sales relative to the percentage change in price. To achieve that, we must take into account the following relationship:
+
+$$
+ln(Y) = ln(\beta_0) + ln(\beta_1*X_i)
+$$
+
+Ultimately, we'll arrive at the following equation.
+
+$$
+ln(Y) = \beta_0 + \beta_1ln(X_i)
+$$
+
+Now, with the logarithmic relationship between sales and prices, we can derive the elasticity, represented by $\beta_1$.
+
+
+<center><img src="OLS_result.png" alt="OLS-result" width="400"></center>
+
+
+Following the OLS regression, we find a coefficient of *3.49* for $\beta_1$, indicating an elasticity of *3.49.* This suggests that sales tend to rise alongside price increases. However, this assumption may not hold true in a typical market where elasticity is negative. The observed positive effect could be attributed to the transition out of lockdown and the resumption of economic activity. During this period, both prices and sales may have increased. Nonetheless, it's crucial to acknowledge that the impact of price on sales could be minimal.
+
+To gain a better understanding of elasticity behavior, we attempt to forecast the volume using the following equation:
+
+$$ Y = \alpha \cdot P^b $$
+where
+$$\alpha=e^a$$
+and, where *a* represents the intercept of the Ordinary Least Squares (OLS) model and *b* signifies the elasticity.
+
+*Note: Keep in mind that for the present model, we are solely taking the price into consideration as a variable.*
+
+
+<center><img src="predicted_price.png" alt="price-predicted" width="950"></center>
+
+
+As depicted in the chart above, our model's predictive accuracy regarding volume is not particularly high. However, it does provide insight into volume trends, particularly when considering price fluctuations.
+
+It's important to acknowledge that our output is influenced by various factors such as time of day, day of the week, and weather conditions, not solely reliant on price.
+
+
+`optimal price`
+
+
+One crucial aspect of running a business is determining the ideal selling price. With the current sales model:
+
+$$
+demand=\alpha price^b
+$$
+
+our aim is to estimate the optimal price.However, before proceeding, we must also analyze the price dynamics and incorporate the final costs into our considerations.
+
+
+<center><img src="boxplot_price_cost.png" alt="boxplot-price-cost" width="950"></center>
+
+
+As illustrated in the box plot, our median price is slightly above \\$19, with a few outliers below \\$14. However, these outliers are uncommon and likely result from the notable cost reductions during the COVID-19 pandemic. With our positive elasticity, we lean towards setting price limits between \\$17.99 and \\$23.99. This range strikes a balance, allowing us to sustain profitability while responding to pandemic-driven shifts in market dynamics.
+
+For the next step we try with Bayesian optimization to refine our pricing strategy. This method aims to approximate the optimal solution by utilizing probabilistic functions. By leveraging Bayesian optimization, we strive to navigate the intricate realm of pricing decisions efficiently. Our approach relies on probabilistic reasoning to help us maximize our desired outcomes effectively.
+
+
+<center><img src="optimal_price.png" alt="optimal-price" width="950"></center>
+
+
+As observed in the graph, our analysis points to an optimal price of $23.99, which aligns closely with our elasticity coefficient of 3.49. This coefficient indicates a positive correlation between price and sales, implying that higher prices correspond to increased sales. However, it's important to acknowledge that this may not fully capture the complexity of the market dynamics. While recent data show a rise in sales despite price increases, historical sales patterns suggest that initial price adjustments had minimal impact on sales. This suggests a market that may be less responsive to price changes, hinting at a degree of inelasticity.
+
+Moreover, our current demand model focuses solely on price, overlooking potential factors that could also influence sales. Incorporating additional variables could lead to a more comprehensive and accurate model. Nevertheless, our current findings suggest that our market may not be as price-sensitive as initially assumed.
+
+
+<center><img src="1st_stage.png" alt="1st-stage" width="250"></center>
+
 ```python
 
 ```
