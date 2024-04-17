@@ -9,6 +9,7 @@
 - [The roadmap](#the-roadmap)
 - [Case study](#case-study)
    + [data exploring](#data-exploring)
+   + [price elasticity](#price-elasticity)
 - [ML models](#ml-models)
    + [building the model](loyalty_drivers.ipynb)
 
