@@ -289,11 +289,16 @@ For the next step we try with Bayesian optimization to refine our pricing strate
 
 <center><img src="optimal_price.png" alt="optimal-price" width="950"></center>
 
-
+<!-- #region -->
 As observed in the graph, our analysis points to an optimal price of $23.99, which aligns closely with our elasticity coefficient of 3.49. This coefficient indicates a positive correlation between price and sales, implying that higher prices correspond to increased sales. However, it's important to acknowledge that this may not fully capture the complexity of the market dynamics. While recent data show a rise in sales despite price increases, historical sales patterns suggest that initial price adjustments had minimal impact on sales. This suggests a market that may be less responsive to price changes, hinting at a degree of inelasticity.
 
 Moreover, our current demand model focuses solely on price, overlooking potential factors that could also influence sales. Incorporating additional variables could lead to a more comprehensive and accurate model. Nevertheless, our current findings suggest that our market may not be as price-sensitive as initially assumed.
 
+
+Currently, we're solely focusing on the initial stage of our roadmap, which involves factoring in price elasticity to address the question, *What is the appropriate price?*
+
+However, we acknowledge the absence of crucial information such as market prices. While this information is currently unavailable to us, it's vital for consideration in our decision-making process.
+<!-- #endregion -->
 
 <center><img src="1st_stage.png" alt="1st-stage" width="250"></center>
 
