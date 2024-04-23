@@ -10,6 +10,7 @@
 - [Case study](#case-study)
    + [data exploring](#data-exploring)
    + [price elasticity](#price-elasticity)
+   + [causalty](#causalty)
 - [ML models](#ml-models)
    + [building the model](loyalty_drivers.ipynb)
 
@@ -251,7 +252,7 @@ Following the OLS regression, we find a coefficient of *3.49* for $\beta_1$, ind
 
 To gain a better understanding of elasticity behavior, we attempt to forecast the volume using the following equation:
 
-$$ Y = \alpha \cdot P^b $$
+$$ Y = \alpha P^b $$
 where
 $$\alpha=e^a$$
 and, where *a* represents the intercept of the Ordinary Least Squares (OLS) model and *b* signifies the elasticity.
@@ -301,6 +302,101 @@ However, we acknowledge the absence of crucial information such as market prices
 <!-- #endregion -->
 
 <center><img src="1st_stage.png" alt="1st-stage" width="250"></center>
+
+
+### Causalty
+
+
+In the realm of business, setting the optimal **price** for a product or service requires finesse. It's not merely about selecting a figure at random; it involves comprehending **how that price point will affect consumer behavior** and, ultimately, the company's financial performance. This is where causality comes into play. In the following discourse, we will delve into the concept of causality and elucidate its pivotal role in shaping pricing strategies for businesses.
+
+Picture yourself managing a lemonade stand on a scorching summer day. You're confronted with a pivotal choice: What should be the price of a cup of refreshing lemonade? If the price is set too high, potential customers might perceive it as too costly and opt not to buy. Conversely, if the price is too low, you may attract a crowd but struggle to cover your expenses. This scenario vividly highlights the significance of causality—the intricate cause-and-effect relationship between price adjustments and consumer behavior.
+
+An understanding of **causality empowers businesses** to make informed decisions regarding **pricing strategies.** By scrutinizing how alterations in price impact the demand for their offerings, businesses can strike a harmonious balance between enticing customers and maximizing profitability.
+
+Throughout this section, we will examine real-world scenarios and offer practical insights to underscore the importance of **causality in pricing strategies.** Additionally, we will explore how businesses can leverage this understanding to accomplish their objectives. 
+
+
+`EconML`
+
+Short for Economic Machine Learning, is a game-changer in economic analysis. By combining economic principles with the computational muscle of machine learning, it helps us understand how different factors affect sales.
+
+This approach allows researchers and policymakers to dig deep into complex data, revealing cause-and-effect relationships in the real world. With EconML, policymakers can evaluate policies more accurately, estimate treatment effects better, and explore "what-if" scenarios more effectively. By bridging economics and machine learning, EconML is set to transform economic analysis and improve decision-making processes.
+
+Link: https://econml.azurewebsites.net/
+
+<!-- #region -->
+After grasping the essence of economics and understanding its utility, the initial step entails identifying treatment effects, features, outcomes, and confounders.
+
+- *outcome:* In EconML, the outcome refers to the variable we are trying to predict or understand. For example, if we are studying the effect of a product's price on sales, the outcome would be the sales figure. It's the variable we aim to comprehend or forecast regarding how it's impacted by other variables.
+
+- *treatment effect:* The treatment effect is the change in the outcome caused by the treatment or intervention under study. For instance, if we're examining the price's effect on sales, the treatment effect would denote how much the sales vary when the product's price changes.
+
+- *features:* Features are the variables we use to predict or understand the outcome and treatment effect. They are the data characteristics believed to be related to the outcome and/or treatment effect. For instance, when studying the price's effect on sales, features could include the day of the week, weather conditions, season, etc.
+
+- *confounders:* Confounders are variables related to both the treatment and outcome, which can introduce bias into the treatment effect estimation if not adequately controlled. It's crucial to control for confounders in causal analysis to ensure precise treatment effect estimation. For example, in studying the price's effect on sales, advertising could be a confounder as it may relate to both price and sales, potentially biasing our treatment effect estimation if not properly controlled.
+
+
+For our specific case study, the variables are as follows:
+
+- *outcome:* volume
+- *treatment effect:* price
+- *features:* weekday, is_weekend, raining_days, holiday_flag
+- *confounders:* hour, covid
+
+For our initial approach, we employ the `LinearDML estimator.` Since we lack specific assumptions about these models, we opt for a versatile gradient boosting estimator to glean insights into the expected price and demand from our dataset.
+<!-- #endregion -->
+
+<center><img src="econml_results.png" alt="econml" width="450"></center>
+
+
+Observations from the table reveal several noteworthy patterns:
+
+- Weekdays exhibit a considerable influence on sales.
+- Sales typically surge on weekdays and decline during weekends.
+- Sales tend to escalate during holidays, attributed to increased travel and customers filling their tanks before departing the city.
+- However, the impact of rainy days on sales is not always consistent.
+- Significantly, **price consistently correlates with reduced sales,** implying that higher prices result in lower sales. This relationship is statistically significant, indicating a causal effect on sales rather than random chance.
+
+Based on the following chart, it's clear that while certain features suggest a causal relationship, the accuracy of forecasting the treatment effect is lacking. To rectify this, we implement a causal forest model to more effectively capture the potential nonlinear relationships between features and the treatment effect.
+
+
+<center><img src="linearDML_predictions.png" alt="econml" width="950"></center>
+
+
+The disappointing predictions from the causal forest model prompt us to re-examine our initial linear model. It's important to emphasize the causal forest's strength in capturing nonlinear relationships between variables and the output.
+
+Additionally, it's worth noting that we've only been considering one degree for the linear DML model so far. However, expanding to incorporate more degrees could prove beneficial.
+
+
+<center><img src="causalforest_predictions.png" alt="econml" width="950"></center>
+
+
+At present, our focus has been solely on the linear model. However, for a more comprehensive understanding of the model's predictive mechanisms, we can utilize the CATE interpreter showcased in the following image.
+
+As observed in the chart below, the initial split is based on rainy days. Subsequently, as illustrated in the table above, weekdays emerge as a crucial factor in forecasting a high or low CATE (Conditional Average Treatment Effect). This correlation aligns logically with the positive relationship between weekdays and sales, which is not merely incidental but substantiated by data. To establish a **data-driven pricing strategy,** we proceed with the policy interpreter.
+
+
+<center><img src="econml_tree.png" alt="econml-tree" width="950"></center>
+
+
+Another aspect to consider is that `EconML` features a policy interpreter capable of taking both treatment costs and treatment effects into account. This interpreter helps to derive straightforward rules for targeting customers profitably, the initial data segmentation is based on identify weekends, with subsequent branching hinging on number of weekday. Notably, there's a discernible upward trend in mean CATE corresponding to higher day numbers.
+
+When employing a policy interpreter that considers treatment costs and effects to discern profitable customer targeting strategies, several patterns emerge: In many cases, adopting a lower **pricing strategy proves beneficial.** However, when the count of rainy days is less than or equal to 10.55, it's advisable to raise prices. Moreover, the analysis highlights the importance of other causal variables such as weekdays and holidays. For instance, holidays, estimated with a point estimate of 186, suggest implementing a price increase strategy during those periods.
+
+
+<center><img src="econml_policytree.png" alt="econml-policy-tree" width="950"></center>
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
 
 ```python
 
