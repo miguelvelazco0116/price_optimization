@@ -11,9 +11,11 @@
    + [data exploring](#data-exploring)
      + [notebook](data_exploring.ipynb)
    + [price elasticity](#price-elasticity)
-     + [notebook](data_exploring.ipynb)
+     + [notebook](elasticity.ipynb)
    + [causalty](#causalty)
+     + [notebook](causalty.ipynb)   
    + [forecasting](#forecasting)
+     + [notebook](forecast.ipynb)
 
 
 ## Why is important?
