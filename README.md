@@ -9,13 +9,13 @@
 - [The roadmap](#the-roadmap)
 - [Case study](#case-study)
    + [data exploring](#data-exploring)
-     + [notebook](data_exploring.ipynb)
+     + [notebook data exploring](data_exploring.ipynb)
    + [price elasticity](#price-elasticity)
-        + [notebook](#elasticity.ipynb)
+        + [notebook elasticity](#elasticity.ipynb)
    + [causalty](#causalty)
-        + [notebook](#casualty.ipynb)
+        + [notebook causalty](#casualty.ipynb)
    + [forecasting](#forecasting)
-        + [notebook](#forecast.ipynb)
+        + [notebook forecast](#forecast.ipynb)
 
 
 ## Why is important?
