@@ -11,7 +11,7 @@
    + [data exploring](#data-exploring)
      + [notebook](data_exploring.ipynb)
    + [price elasticity](#price-elasticity)
-- [notebook](#elasticity.ipynb)
+     + [notebook](data_exploring.ipynb)
    + [causalty](#causalty)
    + [forecasting](#forecasting)
 
