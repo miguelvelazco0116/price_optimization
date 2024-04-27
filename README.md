@@ -13,7 +13,7 @@
    + [price elasticity](#price-elasticity)
      + [notebook](elasticity.ipynb)
    + [causalty](#causalty)
-     + [notebook](causalty.ipynb)   
+     + [notebook](casualty.ipynb)   
    + [forecasting](#forecasting)
      + [notebook](forecast.ipynb)
 
