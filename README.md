@@ -9,10 +9,13 @@
 - [The roadmap](#the-roadmap)
 - [Case study](#case-study)
    + [data exploring](#data-exploring)
+     + [notebook](data_exploring.ipynb)
    + [price elasticity](#price-elasticity)
+        + [notebook](#elasticity.ipynb)
    + [causalty](#causalty)
-- [ML models](#ml-models)
-   + [building the model](loyalty_drivers.ipynb)
+        + [notebook](#casualty.ipynb)
+   + [forecasting](#forecasting)
+        + [notebook](#forecast.ipynb)
 
 
 ## Why is important?
@@ -386,18 +389,135 @@ When employing a policy interpreter that considers treatment costs and effects t
 
 <center><img src="econml_policytree.png" alt="econml-policy-tree" width="950"></center>
 
-```python
 
-```
+### Forecasting
 
-```python
 
-```
+Forecasting sales is crucial in revenue and pricing strategy because it helps businesses plan effectively for the future, for exmaple:
 
-```python
+- *Strategic Resource Allocation:* By anticipating future sales, businesses can allocate resources, this ensures that they have the necessary resources in place to meet demand without overcommitting or underutilizing resources.
 
-```
+- *Price Optimization:* Understanding future sales trends allows businesses to set prices strategically. We can adjust prices based on anticipated demand fluctuations, competitor actions, and market conditions to maximize revenue and profitability.
 
-```python
+- *Market Expansion Strategies:* Sales forecasts provide valuable insights into potential market opportunities and growth areas. Businesses can use this information to identify new target markets or launch new products in line with projected demand.
 
-```
+- *Risk Mitigation:* By forecasting sales, businesses can identify potential risks and uncertainties in their revenue streams. This enables them to develop contingency plans and mitigation strategies to address potential challenges and minimize their impact on business operations.
+
+- *Performance Evaluation:* Sales forecasts serve as benchmarks against which actual performance can be measured. By comparing actual sales figures to forecasted values, businesses can evaluate the effectiveness of their strategies, identify areas for improvement, and make necessary adjustments to enhance future performance.
+
+
+
+Prior to delving into predictions, it's crucial to grasp the behavioral patterns and operational dynamics. As depicted in the chart above, certain hours register zero sales, which is expected considering not all hours witness customer transactions. Fluctuations in demand are observable, with some periods experiencing surges while others decline. Although the chart spans only 30 days, it offers insights into sales trends. Furthermore, the trend chart reveals recurring patterns in sales declines, aligning with observed sales behavior.
+
+
+<center><img src="volume_behavior_fc.png" alt="volume-behavior" width="950"></center>
+<center><img src="temporal_analysis_fc.png" alt="temporal-analysis" width="950"></center>
+
+
+We've conducted additional analyses to deepen our understanding of the data's behavior. Autocorrelation analysis assesses whether a data series correlates with its past values, unveiling patterns where historical data influences future outcomes. In contrast, partial autocorrelation isolates the direct relationship between two time points while accounting for intermediary influences. These analyses are invaluable in time series data, shedding light on how past observations shape future trends. This insight is essential for making precise predictions in fields such as finance, weather forecasting, and sales forecasting.
+
+
+<center><img src="autocorrelation_fc.png" alt="autocorrelation" width="950"></center>
+<center><img src="p_autocorrelation_fc.png" alt="partial-autocorrelation" width="950"></center>
+
+
+Upon scrutinizing the autocorrelation chart, a discernible positive correlation emerges between the sales of a particular hour and those of preceding hours. Furthermore, a correlation is noted between sales at a specific hour and sales during the same hour on preceding days.
+
+`baseline`
+
+At this juncture, our main objective is to establish a foundational benchmark for our sales forecasting endeavors. This baseline acts as a fundamental reference, offering a simple yet effective means to anticipate future sales trends. In our case, we opt for a naive forecasting approach, using historical sales data to guide our predictions. Through this method, our goal is to gain insight into sales patterns, paving the way for the adoption of more advanced forecasting techniques down the line.
+
+`naive forecast`
+
+A naive forecast is akin to making a simplistic projection of the future solely based on past occurrences. It's akin to predicting tomorrow's weather by assuming it will mirror today's conditions—no unexpected changes anticipated. Similarly, in sales forecasting, a naive approach might involve predicting tomorrow's sales to match today's figures. While rudimentary, it offers a foundational starting point for predictions, albeit without considering intricate variables.
+
+
+<center><img src="naive_forecast.png" alt="naive-forecast" width="950"></center>
+
+
+When appraising our baseline model, a critical metric to consider is the baserate, acting as a yardstick for assessing our predictive prowess. In our present scenario, the baserate manifests as our Mean Absolute Error (MAE), currently standing at 77.65. Essentially, this indicates that, on average, our predictions deviate from the actual values by approximately 77.65 units. Hence, our objective is to refine our baseline model to achieve an MAE below this threshold, thereby elevating its predictive precision and surpassing the baserate. This marks a pivotal stride in our endeavor to cultivate more resilient forecasting models.
+
+<!-- #region -->
+`skforecast`
+
+As we advance to the next phase of refining our predictions, we're thrilled to introduce SKForecaster into our toolkit. SKForecaster is a robust tool crafted for generating forecasts through data analysis—a modern-day crystal ball for numbers, if you will! By supplying SKForecaster with pertinent data, such as historical sales data or weather patterns, we can leverage its predictive prowess to anticipate future outcomes. Whether it's supporting businesses in strategic planning or aiding meteorologists in forecasting tomorrow's weather, SKForecaster simplifies the process by handling all the intricate calculations behind the scenes. All you need to do is input your data, sit back, and let SKForecaster work its magic, offering valuable insights into what lies ahead.
+
+`LGBM (light gradient-boosting machine)` 
+
+
+Now that we have a comprehensive understanding of the algorithms in our arsenal, we can proceed with our analysis. In our examination, we've identified that the Mean Absolute Error (MAE) from the forecast (MAE:11,061.8) slightly exceeds that of the baseline. Before determining the model to deploy, fine-tuning is essential. Although the current MAE from the baseline seems adequate, particularly for scenarios involving seasonal data, our aim is to pursue a more refined approach. This involves leveraging the capabilities of the skforecast framework, underscoring our dedication to enhancing forecast accuracy and precision.
+
+Upon reviewing the accompanying chart, it becomes apparent that the model's accuracy may not be optimal. However, a closer scrutiny of the forecast reveals variations that offer valuable insights into sales behavior. While the model generally aligns with the sales trend, occasional deviations are evident. Although it captures the essence of the trend, there are instances where improved accuracy could yield significant benefits.
+<!-- #endregion -->
+
+<center><img src="forecast01.png" alt="forecast01" width="950"></center>
+
+
+In our endeavor to boost the accuracy of our forecasting model, we're diving into the realm of fine-tuning techniques. This entails experimenting with different hyperparameters to fine-tune the performance of our model. By engaging in meticulous exploration and iteration, our goal is to pinpoint the optimal combination of hyperparameters that produce superior results. After evaluating various options thoroughly, we'll cherry-pick the top-performing model from the array of candidates generated. This rigorous process ensures that we deploy the most polished and accurate forecasting model, thereby equipping us to make informed decisions based on dependable predictions.
+
+Following our fine-tuning efforts, the Mean Absolute Error (MAE) still exceeds the baseline rate *(MAE: 10,983.87).* Currently, our forecasting strategy relies solely on sales data without integrating additional variables.
+
+
+<center><img src="forecast02.png" alt="forecast02" width="950"></center>
+
+
+The charts above indicate that while the Mean Absolute Error (MAE) exceeds the base rate, there's still potential for improvement in our forecasting techniques.
+
+In our pursuit of enhancing forecast accuracy, we've integrated additional exogenous variables into our analysis. These variables aim to improve pattern recognition and forecasting precision, with factors like the day of the week, pricing fluctuations, and holiday presence identified as key contributors to sales volume.
+
+Following the retraining of our model with these additional variables, we achieved an MAE of 63.4, surpassing our baseline of 77. This significant improvement underscores the effectiveness of including exogenous variables in identifying patterns and enhancing accuracy. To further refine our model, we conducted an optimization process, resulting in a reduced MAE of 61.7.
+
+The accompanying chart demonstrates the predictions prior to hyperparameter optimization, showcasing improved capture of sales behavior and trends.
+
+
+<center><img src="forecast03.png" alt="forecast03" width="950"></center>
+
+
+`SHAP`
+
+
+Our primary objective is to uncover the pivotal features that drive predictions within our model and evaluate their alignment with significant factors identified in our prior causal analysis.
+
+SHAP, shorthand for SHapley Additive exPlanations, serves as a powerful tool in the realm of machine learning, offering insights into the rationale behind a model's predictions. Operating akin to attributing credit in team sports, SHAP assigns a "credit" to each feature in a prediction, signifying its contribution to the outcome. By shedding light on the most influential features and their respective contributions, SHAP facilitates a deeper comprehension and interpretation of intricate machine learning models.
+
+As depicted in the chart below, certain variables such as hour, price, weekday, and holiday status emerge as robust predictors for the forecaster, aligning with the findings from our earlier causal analysis.
+
+
+<center><img src="shap_summary.png" alt="shap-summary" width="550"></center>
+<center><img src="shap.png" alt="shap" width="950"></center>
+<center><img src="shap_price.png" alt="shap-price" width="950"></center>
+
+
+An essential aspect to emphasize is the significant influence of pricing, as corroborated by our prior analysis. It's evident that pricing has a considerable impact on sales, exerting a negative effect.
+
+
+### Conclusions
+
+
+<center><img src="2nd_stage.png" alt="2nd-stage" width="450"></center>
+
+
+As we journey through the significant phases of our revenue management roadmap, we embark on a profound exploration of discovery and strategy. Our expedition begins with a comprehensive understanding of consumer behavior—a pivotal step in navigating our path to market success. Through meticulous analysis, we uncover the intricate dynamics of consumer purchasing patterns, discerning the nuances of their engagement with our products and services. From the timing of purchases to the influence of external factors like weather conditions and holidays, we scrutinize every variable to gain deeper insights into consumer behavior.
+
+Armed with this invaluable knowledge, we progress to the next stage of our journey—a phase characterized by data-driven insights and strategic decision-making. Our causal analysis endeavors to validate hypotheses and unearth the causal effects of exogenous variables. This rigorous examination not only confirms our assumptions but also sheds light on the underlying drivers of consumer behavior, from pricing elasticity to the complex interplay of market dynamics.
+
+However, our journey does not culminate with analysis alone. We venture further, exploring avenues to optimize our pricing strategy based on newfound insights. Through meticulous experimentation and fine-tuning, we aim to unlock the full potential of our pricing model, ensuring its alignment with market demands and consumer preferences.
+
+As we reflect on our odyssey thus far, we recognize that our roadmap to revenue management transcends mere analysis—it embodies our unwavering commitment to innovation and excellence. Our journey not only furnishes invaluable insights into future sales behavior but also equips us with the foresight to anticipate market shifts and adapt proactively.
+
+In addition to our analytical voyage, it's essential to acknowledge the invaluable support provided by the policy interpreter from `Econml.` While this tool initially suggested strategies such as price decreases, it also illuminated scenarios where increasing prices, particularly on rainy days, could yield greater benefits. However, our considerations extend beyond mere price adjustments. 
+
+Another thing to consider in the future is we need delve into the intricacies of pricing architecture, exploring the impact of price endings and the subtle nudges they create for consumers. Moreover, we recognize the significance of peak hours and the potential for profit optimization through dynamic pricing strategies. By strategically adjusting prices based on demand fluctuations, we not only enhance profitability but also tailor our offerings to meet consumer needs effectively. This multifaceted approach underscores our commitment to maximizing value and driving sustainable growth in an ever-evolving marketplace.
+
+Based on the insights gained from our analysis, we recommend the following pricing strategiesa nd next steps:
+
+- **Day of the week pricing strategy:** Implement a dynamic pricing strategy based on the day of the week. Consider adjusting prices to reflect consumer demand patterns, increasing or decreasing prices accordingly.
+- **Holiday pricing:** During holidays, capitalize on increased consumer spending by strategically raising prices to optimize profitability.
+- **Hourly pricing:** Align with dynamic pricing by adjusting prices throughout the day based on demand fluctuations. Leverage peak hours to maximize revenue potential.
+- **Pricing endings analysis:** Delve into the impact of price endings on consumer behavior. Understand how price points influence purchasing decisions and adjust pricing accordingly.
+- **Cross-elasticity analysis:** Analyze the effects of market price changes on sales variations. Calculate cross-elasticity to assess how adjustments in market prices impact consumer demand and tailor pricing strategies accordingly.
+
+By implementing these pricing strategies, you can not only optimize revenue but also better meet consumer needs and enhance overall profitability.
+
+
+<center><img src="dynamic_price.png" alt="dynamic-price" width="850"></center>
