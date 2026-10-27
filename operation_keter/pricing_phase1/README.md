@@ -1,37 +1,48 @@
-# OPERATION KETER — Fase 1: Pricing Elasticity
+# OPERATION KETER — Fase 1.1: Pricing Elasticity + Diagnóstico
 
-App mínima de **Streamlit** para estimar la elasticidad precio de la demanda con una regresión **OLS log-log**.
+Aplicación **Streamlit** para estimar elasticidad precio con una regresión **OLS log-log**, realizar una prueba de **heterocedasticidad** y reportar incertidumbre robusta.
 
 ## Alcance
 
-1. Cargar un archivo de datos históricos `.csv` o `.xlsx` (primera hoja, máximo 10 MB).
-2. Elegir columna de **precio** y columna de **volumen**.
+1. Cargar archivo histórico `.csv` o `.xlsx` (primera hoja, máximo 10 MB).
+2. Seleccionar las columnas de precio y volumen.
 3. Pulsar **Calcular elasticidad**.
-4. Obtener exclusivamente el coeficiente estimado de elasticidad.
+4. Ver un **único indicador principal: elasticidad precio**.
+5. Ver diagnóstico breve de Breusch–Pagan; el detalle opcional muestra su p-valor, error estándar HC3 e intervalo de confianza.
 
-No genera optimizaciones, gráficos, recomendaciones de precio ni proyecciones de profit.
+No incorpora aún simulaciones, optimización, recomendaciones de precio ni proyecciones de profit.
 
 ## Modelo
 
 `ln(volumen) = β₀ + β₁ × ln(precio) + error`
 
-**Elasticidad precio = β₁.** Por ejemplo, β₁ = -1.5 significa que un incremento de 1% en precio se asocia aproximadamente con una reducción del 1.5% de volumen, bajo los supuestos del modelo.
+**Elasticidad precio = β₁**. Ejemplo: β₁ = -1.5 implica que un aumento del 1% en precio se asocia aproximadamente con una caída del 1.5% de volumen, manteniendo los supuestos del modelo.
 
-> OLS simple identifica una relación histórica, no necesariamente un efecto causal del precio. Promociones, estacionalidad y tendencias pueden sesgar la estimación si afectan precio y volumen.
+### Diagnóstico de heterocedasticidad
+
+- Prueba **Koenker–Breusch–Pagan** sobre los residuos del modelo, con regresores [constante, ln(precio)].
+- Hipótesis nula H₀: varianza condicional constante (homocedasticidad).
+- Nivel de significancia fijado en **α = 0.05**.
+- Si `p < 0.05`, se muestra **«evidencia de heterocedasticidad»**.
+- Si `p >= 0.05`, se muestra **«sin evidencia suficiente de heterocedasticidad»**; esto **no prueba** homocedasticidad.
+- Si el ajuste es prácticamente perfecto, los residuos son insuficientes para evaluar la prueba y se informa **«no evaluable»**.
+- Se calculan errores estándar e IC al 95% robustos **HC3** para la elasticidad; se muestran en el detalle opcional. HC3 **no cambia el coeficiente OLS**, solo su inferencia.
+
+> Importante: la heterocedasticidad no es el único riesgo de una estimación. La endogeneidad de precio, promociones, estacionalidad, precios de competidores o autocorrelación pueden sesgar o invalidar inferencias. Este modelo bivariado describe asociación histórica; **no demuestra efecto causal del precio**. HC3 no corrige endogeneidad ni autocorrelación. Para series cronológicas será necesario evaluar esa dependencia en una fase posterior.
 
 ## Requisitos de datos
 
-- Mínimo **8 observaciones**.
-- Precio y volumen estrictamente **mayores que 0** en todas las filas.
-- Columnas numéricas, sin valores vacíos ni símbolos monetarios.
-- El precio debe variar; se rechazan datos inválidos en vez de excluir filas silenciosamente.
-- Cada fila debe representar observaciones comparables para un mismo producto/mercado y periodo homogéneo.
+- Mínimo **8 observaciones** (es un mínimo técnico, no garantiza potencia estadística para Breusch–Pagan).
+- Precio y volumen estrictamente **mayores que cero** en todas las filas.
+- Valores numéricos sin símbolos monetarios ni valores vacíos.
+- Precio con variación suficiente; se rechazan filas inválidas en vez de eliminarlas silenciosamente.
+- Datos comparables de un producto y un mercado, con observaciones de periodos homogéneos.
 
-Archivo de ejemplo: [`data/example.csv`](data/example.csv). Es **sintético**, no representa ventas reales.
+Ejemplo sintético: [`data/example.csv`](data/example.csv).
 
-## Ejecutar en Windows (PowerShell)
+## Ejecutar (Windows PowerShell)
 
-Ubicado en la carpeta de este módulo:
+Desde esta carpeta:
 
 ```powershell
 py -3.12 -m venv .venv
@@ -40,7 +51,7 @@ python -m pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Abrir la dirección local que indique Streamlit (normalmente `http://localhost:8501`).
+Abre la dirección local que indique Streamlit (normalmente `http://localhost:8501`).
 
 ## Pruebas
 
@@ -49,13 +60,13 @@ python -m pip install pytest
 python -m pytest -q
 ```
 
-## Archivos
+## Estructura
 
-- `app.py`: interfaz Streamlit.
-- `elasticity.py`: validación de entradas y estimación OLS log-log.
-- `tests/test_elasticity.py`: pruebas del estimador.
-- `data/example.csv`: datos de prueba sintéticos.
+- `app.py`: interfaz de Streamlit.
+- `elasticity.py`: estimador OLS log-log, Breusch–Pagan y HC3.
+- `tests/test_elasticity.py`: pruebas de estimación y de condiciones de varianza.
+- `data/example.csv`: dataset sintético para pruebas.
 
-## Roadmap (fuera de esta fase)
+## Evolución futura
 
-Este módulo será parte de OPERATION KETER. Las fases posteriores podrán incorporar diagnósticos econométricos, control de variables, pricing y optimización; **no forman parte de la Fase 1**.
+Diagnósticos de autocorrelación, controles por promociones y estacionalidad, estimación causal y motor de optimización comercial. Ninguno forma parte de esta fase.
